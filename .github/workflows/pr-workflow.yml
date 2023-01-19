@@ -82,10 +82,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Set outputs
+        id: vars
+        run: echo "docker_tag=1.0-${GIT_COMMIT::8}" >> $GITHUB_OUTPUT
+
       - name: Execute component test
         run: ci/component-test.sh
         env:
-          DOCKER_TAG: 1.0-${GIT_COMMIT::8}
+          DOCKER_TAG: ${{ steps.vars.outputs.docker_tag }}
 
   perf-test:
     needs: [docker-image]
@@ -94,7 +98,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Set outputs
+        id: vars
+        run: echo "docker_tag=1.0-${GIT_COMMIT::8}" >> $GITHUB_OUTPUT
+
       - name: Execute performance test
         run: ci/performance-test.sh
         env:
-          DOCKER_TAG: 1.0-${GIT_COMMIT::8}
+          DOCKER_TAG: ${{ steps.vars.outputs.docker_tag }}
