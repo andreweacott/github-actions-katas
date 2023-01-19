@@ -1,6 +1,6 @@
 package example.micronaut;
 
-import io.micronaut.runtime.Micronaut;
+import io.micronaut.runtime.Micronaut_missing;
 
 public class Application {
 
