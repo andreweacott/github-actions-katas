@@ -83,7 +83,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Execute component test
-        run: chmod +x ci/component-test.sh && DOCKER_TAG="1.0-${GIT_COMMIT::8}" && ci/component-test.sh
+        run: ci/component-test.sh
+        env:
+          DOCKER_TAG: 1.0-${GIT_COMMIT::8}
 
   perf-test:
     needs: [docker-image]
@@ -92,5 +94,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Execute component test
-        run: chmod +x ci/performance-test.sh  && DOCKER_TAG="1.0-${GIT_COMMIT::8}" && ci/performance-test.sh 
+      - name: Execute performance test
+        run: ci/performance-test.sh
+        env:
+          DOCKER_TAG: 1.0-${GIT_COMMIT::8}
